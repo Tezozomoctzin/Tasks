@@ -24,7 +24,7 @@ public class PriceDiscountPurchase extends Purchase {
 	}
 
 	protected String fieldsToString(){
-		return super.getName() + ";" + super.getPrice() + ";" + super.getNumber() + ";";
+		return super.getName() + "; " + super.getPrice() + "; " + super.getNumber() + "; ";
 	}
 	
 	@Override

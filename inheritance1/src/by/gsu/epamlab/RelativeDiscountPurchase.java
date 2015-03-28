@@ -20,12 +20,12 @@ public class RelativeDiscountPurchase extends Purchase {
 	}
 
 	protected String fieldsToString(){
-		return super.getName() + ";" + super.getPrice() + ";" + super.getNumber() + ";";
+		return super.getName() + "; " + super.getPrice() + "; " + super.getNumber() + "; ";
 	}
 
 	@Override
 	public double getCost() {
-		return (this.THRESHOLD > super.getNumber()) ? (super.getCost() * (1 - this.DISCOUNT/100)) : super.getCost(); 
+		return (super.getNumber() > this.THRESHOLD) ? (super.getCost() * (1 - this.DISCOUNT/100)) : super.getCost(); 
 	}
 
 	@Override

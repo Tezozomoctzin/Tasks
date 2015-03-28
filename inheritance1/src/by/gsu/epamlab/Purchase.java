@@ -19,11 +19,8 @@ public class Purchase {
 	
 	public Purchase(Scanner input){
 			this.name = input.next();
-			System.out.println(this.name);
 			this.price = input.nextDouble();
-			System.out.println(this.price);
 			this.number = input.nextInt();
-			System.out.println(this.number);
 	}
 	
 	public String getName() {
@@ -50,7 +47,7 @@ public class Purchase {
 	}
 	@Override
 	public String toString() {
-		return this.name + ";" + this.price + ";" + this.number + ";" + this.getCost() + "\n";
+		return this.name + "; " + this.price + "; " + this.number + "; " + this.getCost();
 	}
 	@Override
 	public int hashCode() {
@@ -81,6 +78,9 @@ public class Purchase {
 			return false;
 		return true;
 	}
+	
+	
+
 	
 	
 	

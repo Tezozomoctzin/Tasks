@@ -10,9 +10,9 @@ import by.gsu.epamlab.PurchaseFactory;
 public class Runner {
 
 	public static void main(String[] args) {
-		boolean allEqual;
+		boolean allEqual = true;
 		File file = new File("in.txt");
-		Purchase maxCostPurchase = new Purchase();
+		Purchase maxCostPurchase = new Purchase("goods", 0, 0);
 		Purchase[] purchases = new Purchase[6]; 
 		Scanner scan;
 		try {
@@ -20,22 +20,21 @@ public class Runner {
 			scan.useLocale(Locale.ENGLISH);
 			for(int i = 0; i < purchases.length; i++){
 				purchases[i] = PurchaseFactory.getPurchaseFromFactory(scan);
-				purchases[i].toString();
-				if(allEqual = true){
+				System.out.println(purchases[i].toString()); 
+				if(allEqual == true){
 					allEqual = purchases[i].equals(purchases[0]);
-					System.out.println("pop");
 				}
-				if(maxCostPurchase.getCost() > purchases[i].getCost())
+				if(maxCostPurchase.getCost() < purchases[i].getCost())
 				{
 					maxCostPurchase = purchases[i];
 				}				
 			}
+			System.out.println((allEqual == true) ? ("All purchases are equal") : "Purchases are not equal");
+			System.out.println("Purchase with maximum cost is: " + maxCostPurchase.toString());
 		} catch (FileNotFoundException e) {
 			System.out.println("No file");
 			e.printStackTrace();
 		}
-		purchases[2].toString();
-		System.out.println("\nT_T");
 	}
 
 }
