@@ -18,15 +18,16 @@ public class Runner {
 		try {
 			scan = new Scanner(file);
 			scan.useLocale(Locale.ENGLISH);
-			for(Purchase purchase : purchases){
-				purchase = PurchaseFactory.getPurchaseFromFactory(scan);
-				purchase.toString();
+			for(int i = 0; i < purchases.length; i++){
+				purchases[i] = PurchaseFactory.getPurchaseFromFactory(scan);
+				purchases[i].toString();
 				if(allEqual = true){
-					allEqual = purchase.equals(purchases[0]);
+					allEqual = purchases[i].equals(purchases[0]);
+					System.out.println("pop");
 				}
-				if(maxCostPurchase.getCost() > purchase.getCost())
+				if(maxCostPurchase.getCost() > purchases[i].getCost())
 				{
-					maxCostPurchase = purchase;
+					maxCostPurchase = purchases[i];
 				}				
 			}
 		} catch (FileNotFoundException e) {

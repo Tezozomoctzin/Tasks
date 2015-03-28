@@ -11,8 +11,8 @@ public class RelativeDiscountPurchase extends Purchase {
 		super();
 	}
 
-	public RelativeDiscountPurchase(Scanner input) {
-		super(input);
+	public RelativeDiscountPurchase(Scanner sc) {
+		super(sc);
 	}
 
 	public RelativeDiscountPurchase(String name, double price, int number) {

@@ -19,8 +19,11 @@ public class Purchase {
 	
 	public Purchase(Scanner input){
 			this.name = input.next();
+			System.out.println(this.name);
 			this.price = input.nextDouble();
+			System.out.println(this.price);
 			this.number = input.nextInt();
+			System.out.println(this.number);
 	}
 	
 	public String getName() {

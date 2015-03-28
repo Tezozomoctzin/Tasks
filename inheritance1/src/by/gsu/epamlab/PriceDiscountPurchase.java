@@ -10,8 +10,8 @@ public class PriceDiscountPurchase extends Purchase {
 		super();
 	}
 
-	public PriceDiscountPurchase(Scanner input) {
-		super(input);
+	public PriceDiscountPurchase(Scanner sc) {
+		super(sc);
 	}
 
 	public PriceDiscountPurchase(String name, double price, int number) {

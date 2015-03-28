@@ -13,10 +13,13 @@ public class PurchaseFactory {
 		PurchseType type = PurchseType.valueOf(id);
 		switch(type){	
 		case GENERAL_PURCHASE:
+			System.out.println("GP");
 			return new Purchase(sc);
 		case PRICE_DISCOUNT:
+			System.out.println("DP");
 			return new PriceDiscountPurchase(sc);
 		case RELATIVE_DISCOUNT:
+			System.out.println("RP");
 			return new RelativeDiscountPurchase(sc);
 		default:
 			throw new IllegalArgumentException();
