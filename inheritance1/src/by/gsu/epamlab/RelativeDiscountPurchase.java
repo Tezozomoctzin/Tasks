@@ -25,7 +25,7 @@ public class RelativeDiscountPurchase extends Purchase {
 
 	@Override
 	public double getCost() {
-		return (super.getNumber() > this.THRESHOLD) ? (super.getCost() * (1 - this.DISCOUNT/100)) : super.getCost(); 
+		return (super.getNumber() > this.THRESHOLD) ? Math.round((super.getCost() * (1 - this.DISCOUNT/100))) : super.getCost(); 
 	}
 
 	@Override
