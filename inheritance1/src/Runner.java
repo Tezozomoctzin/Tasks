@@ -34,7 +34,8 @@ public class Runner {
 			System.out.println("No file");
 			e.printStackTrace();
 		}
-		System.out.println("T_T");
+		purchases[2].toString();
+		System.out.println("\nT_T");
 	}
 
 }
