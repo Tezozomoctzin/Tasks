@@ -3,7 +3,7 @@ package by.gsu.epamlab;
 public class Commodity {
 
 	private String name;
-	private int price;
+	private double price;
 	
 	public Commodity() {
 		super();
@@ -23,7 +23,7 @@ public class Commodity {
 		this.name = name;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
