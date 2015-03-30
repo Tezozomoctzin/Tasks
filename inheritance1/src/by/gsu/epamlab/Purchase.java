@@ -4,13 +4,13 @@ import java.util.Scanner;
 public class Purchase {
 
 	private String name;
-	private double price;
+	private int price;
 	private int number;
 	
 	public Purchase() {
 		
 	}
-	public Purchase(String name, double price, int number) {
+	public Purchase(String name, int price, int number) {
 		super();
 		this.name = name;
 		this.price = price;
@@ -19,7 +19,7 @@ public class Purchase {
 	
 	public Purchase(Scanner input){
 			this.name = input.next();
-			this.price = input.nextDouble();
+			this.price = input.nextInt();
 			this.number = input.nextInt();
 	}
 	
@@ -32,7 +32,7 @@ public class Purchase {
 	public double getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 	public int getNumber() {
@@ -48,7 +48,13 @@ public class Purchase {
 	@Override
 	public String toString() {
 		return this.name + "; " + this.price + "; " + this.number + "; " + this.getCost();
+	
 	}
+	
+	protected String fieldsToString() {
+		return name + "; " + price + "; " + number;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -65,7 +71,7 @@ public class Purchase {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Purchase))
 			return false;
 		Purchase other = (Purchase) obj;
 		if (name == null) {
@@ -78,7 +84,7 @@ public class Purchase {
 			return false;
 		return true;
 	}
-	
+
 	
 
 	

@@ -4,8 +4,24 @@ import java.util.Scanner;
 
 public class RelativeDiscountPurchase extends Purchase {
 
-	private final int THRESHOLD = 25;
-	private final double DISCOUNT = 7.75;
+	private int threshold = 3;
+	private double discount ;
+
+	public int getThreshold() {
+		return threshold;
+	}
+
+	public void setThreshold(int threshold) {
+		this.threshold = threshold;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
 
 	public RelativeDiscountPurchase() {
 		super();
@@ -13,24 +29,27 @@ public class RelativeDiscountPurchase extends Purchase {
 
 	public RelativeDiscountPurchase(Scanner sc) {
 		super(sc);
+		this.discount = sc.nextDouble();
 	}
 
-	public RelativeDiscountPurchase(String name, double price, int number) {
+	public RelativeDiscountPurchase(String name, int price, int number, double discount) {
 		super(name, price, number);
+		this.discount = discount;
+	}
+	
+	protected String fieldsToString() {
+		return  super.fieldsToString() + "; " + discount;
 	}
 
-	protected String fieldsToString(){
-		return super.getName() + "; " + super.getPrice() + "; " + super.getNumber() + "; ";
-	}
-
+	
 	@Override
 	public double getCost() {
-		return (super.getNumber() > this.THRESHOLD) ? Math.round((super.getCost() * (1 - this.DISCOUNT/100))) : super.getCost(); 
+		return (super.getNumber() > this.threshold) ? Math.round((super.getCost() * (1 - this.discount/100))) : super.getCost(); 
 	}
 
 	@Override
 	public String toString() {
-		return fieldsToString() + this.getCost();
+		return fieldsToString() + "; " + getCost();
 	}
 	
 	

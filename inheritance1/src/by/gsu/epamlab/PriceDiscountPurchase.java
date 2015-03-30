@@ -4,34 +4,42 @@ import java.util.Scanner;
 
 public class PriceDiscountPurchase extends Purchase {
 
-	private final double DISCOUNT = 100;
+	private int discount = 100;
 	
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+
 	public PriceDiscountPurchase() {
 		super();
 	}
 
 	public PriceDiscountPurchase(Scanner sc) {
 		super(sc);
+		this.discount = sc.nextInt();
 	}
 
-	public PriceDiscountPurchase(String name, double price, int number) {
+	public PriceDiscountPurchase(String name, int price, int number, int discount) {
 		super(name, price, number);
 	}
 
 	@Override
 	public double getCost() {
-		return (super.getPrice() - this.DISCOUNT) * super.getNumber(); 
+		return (getPrice() - this.discount) * getNumber(); 
 	}
 
-	protected String fieldsToString(){
-		return super.getName() + "; " + super.getPrice() + "; " + super.getNumber() + "; ";
-	}
-	
 	@Override
 	public String toString() {
-		return fieldsToString() + this.getCost();
+		return fieldsToString() + "; " + getCost();
 	}
 	
-	
+	protected String fieldsToString() {
+		return  super.fieldsToString() + "; " + discount;
+	}
+
 	
 }

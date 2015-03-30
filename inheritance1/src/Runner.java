@@ -7,14 +7,13 @@ import by.gsu.epamlab.Purchase;
 import by.gsu.epamlab.PurchaseFactory;
 
 
-public class Runner {
-
+public class Runner {	
 	public static void main(String[] args) {
 		boolean allEqual = true;
-		File file = new File("in.txt");
+		File file = new File("src/in.txt");
 		Purchase maxCostPurchase = new Purchase("goods", 0, 0);
-		Purchase[] purchases = new Purchase[6]; 
-		Scanner scan;
+		Purchase[] purchases = new Purchase[6];
+		Scanner scan = null;
 		try {
 			scan = new Scanner(file);
 			scan.useLocale(Locale.ENGLISH);
@@ -34,6 +33,10 @@ public class Runner {
 		} catch (FileNotFoundException e) {
 			System.out.println("No file");
 			e.printStackTrace();
+		}finally{
+			if(scan != null){		
+				scan.close();
+			}
 		}
 	}
 

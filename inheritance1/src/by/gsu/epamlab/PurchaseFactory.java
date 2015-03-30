@@ -5,23 +5,27 @@ import java.util.Scanner;
 public class PurchaseFactory {
 
 	public static enum PurchseType{
-		GENERAL_PURCHASE, PRICE_DISCOUNT, RELATIVE_DISCOUNT
+		GENERAL_PURCHASE{
+			@Override
+			Purchase getPurchase(Scanner sc) {
+				return new Purchase(sc);
+			}},
+		PRICE_DISCOUNT{
+			@Override
+			Purchase getPurchase(Scanner sc) {
+				return new PriceDiscountPurchase(sc);
+			}},
+		RELATIVE_DISCOUNT{
+			@Override
+			Purchase getPurchase(Scanner sc) {
+				return new RelativeDiscountPurchase(sc);
+			}};
+		
+		abstract Purchase getPurchase(Scanner sc);
 	}
 	
 	public static Purchase getPurchaseFromFactory(Scanner sc){
-		String id = sc.next();
-		PurchseType type = PurchseType.valueOf(id);
-		switch(type){	
-		case GENERAL_PURCHASE:
-			return new Purchase(sc);
-		case PRICE_DISCOUNT:
-			return new PriceDiscountPurchase(sc);
-		case RELATIVE_DISCOUNT:
-			return new RelativeDiscountPurchase(sc);
-		default:
-			throw new IllegalArgumentException();
-		}
-		
+		String id = sc.next();		
+		return PurchseType.valueOf(id.toUpperCase()).getPurchase(sc);	
 	}
-	
 }
