@@ -31,7 +31,7 @@ public abstract class AbstractPurchase implements Comparable<AbstractPurchase> {
 		this.number = number;
 	}
 
-	abstract double getCost();
+	public abstract double getCost();
 
 	@Override
 	public int compareTo(AbstractPurchase o) {

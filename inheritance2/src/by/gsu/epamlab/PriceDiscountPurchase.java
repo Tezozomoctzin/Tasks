@@ -2,19 +2,20 @@ package by.gsu.epamlab;
 
 public class PriceDiscountPurchase extends AbstractPurchase{
 
-	private final double DISCOUNT = 200;
+	private int discount = 200;
 	
 	public PriceDiscountPurchase() {
 		super();
 	}
 
-	public PriceDiscountPurchase(Commodity commodity, int number) {
+	public PriceDiscountPurchase(Commodity commodity, int number, int discount) {
 		super(commodity, number);
+		this.discount = discount;
 	}
 
 	@Override
-	double getCost() {
-		return (super.commodity.getPrice() - this.DISCOUNT) * super.getNumber();
+	public double getCost() {
+		return (super.commodity.getPrice() - this.discount) * super.getNumber();
 	}
 
 	@Override
