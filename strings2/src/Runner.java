@@ -4,6 +4,8 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.transform.ErrorListener;
+
 public class Runner {
 	public static void main(String[] args) {
 		ResourceBundle rb = ResourceBundle.getBundle("in");
@@ -14,18 +16,12 @@ public class Runner {
 		double sum = 0;
 		int errorLines = 0;
 		while (keys.hasMoreElements()) {
+			operatingValue = null;
 			key = keys.nextElement();
-			if (indexKeyCheck(key) && !(indexZeroCheck(key))
-					&& isNumber(rb.getString(key))) {
-				orderNumber = getOrderNumber(key, rb.getString(key));
-				operatingValue = getValueByKey(orderNumber);
-				if (operatingValue != null && !(valueZeroCheck(operatingValue))
-						&& isNumber(operatingValue)) {
-					sum += Double.parseDouble(operatingValue);
-				} else {
-					errorLines++;
-				}
-			} else if (indexKeyCheck(key) && !(isNumber(rb.getString(key)))) {
+			double getValidValue = fullCheck(key, rb);
+			if (getValidValue != 0) {
+				sum += getValidValue;
+			} else if (key.startsWith("index")) {
 				errorLines++;
 			}
 		}
@@ -34,7 +30,7 @@ public class Runner {
 	}
 
 	static boolean indexKeyCheck(String key) {
-		Pattern indexPattern = Pattern.compile("(index)([1-9])?([0-9]+)");
+		Pattern indexPattern = Pattern.compile("(index)([1-9])([0-9]+)?");
 		Matcher indexMatcher = indexPattern.matcher(key);
 		return indexMatcher.lookingAt();
 	}
@@ -57,12 +53,9 @@ public class Runner {
 		return zeroMatcher.lookingAt();
 	}
 
-	static String getValueByKey(String orderNumber) {
-		Pattern valueIndex = Pattern.compile(orderNumber);
-		ResourceBundle bundle = ResourceBundle.getBundle("in");
-		Enumeration<String> bundleKeys = bundle.getKeys();
+	static String getValueByKey(String orderNumber, ResourceBundle rb) {
 		try {
-			String value = bundle.getString(orderNumber).trim();
+			String value = rb.getString(orderNumber).trim();
 			if (isNumber(value)) {
 				return value;
 			} else {
@@ -97,6 +90,22 @@ public class Runner {
 		} else {
 			return null;
 		}
+	}
+
+	static double fullCheck(String key, ResourceBundle rb) {
+		if (indexKeyCheck(key) && !(indexZeroCheck(key))
+				&& isNumber(rb.getString(key))
+				&& !valueZeroCheck(rb.getString(key))) {
+			String orderNumber = getOrderNumber(key, rb.getString(key));
+			if (orderNumber != null) {
+				String operatingValue = getValueByKey(orderNumber, rb);
+				if (operatingValue != null && !(valueZeroCheck(operatingValue))
+						&& isNumber(operatingValue)) {
+					return Double.parseDouble(operatingValue);
+				}
+			}
+		}
+		return 0;
 	}
 
 }
