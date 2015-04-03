@@ -4,8 +4,6 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-
 public class Runner {
 	public static void main(String[] args) {
 		ResourceBundle rb = ResourceBundle.getBundle("in");
@@ -15,17 +13,19 @@ public class Runner {
 		String orderNumber;
 		double sum = 0;
 		int errorLines = 0;
-		while (keys.hasMoreElements()){
+		while (keys.hasMoreElements()) {
 			key = keys.nextElement();
-			if(indexKeyCheck(key) && isNumber(rb.getString(key))){
+			if (indexKeyCheck(key) && !(indexZeroCheck(key))
+					&& isNumber(rb.getString(key))) {
 				orderNumber = getOrderNumber(key, rb.getString(key));
 				operatingValue = getValueByKey(orderNumber);
-				if(operatingValue != null && isNumber(operatingValue)){
+				if (operatingValue != null && !(valueZeroCheck(operatingValue))
+						&& isNumber(operatingValue)) {
 					sum += Double.parseDouble(operatingValue);
-				} else{
+				} else {
 					errorLines++;
 				}
-			}else if(indexKeyCheck(key) && !(isNumber(rb.getString(key)))){
+			} else if (indexKeyCheck(key) && !(isNumber(rb.getString(key)))) {
 				errorLines++;
 			}
 		}
@@ -33,58 +33,70 @@ public class Runner {
 		System.out.println("error-lines = " + errorLines);
 	}
 
-	static boolean indexKeyCheck(String key){
-		Pattern indexPattern = Pattern.compile("(index)([0-9]+)");
+	static boolean indexKeyCheck(String key) {
+		Pattern indexPattern = Pattern.compile("(index)([1-9])?([0-9]+)");
 		Matcher indexMatcher = indexPattern.matcher(key);
 		return indexMatcher.lookingAt();
-	}	
+	}
 
-	static boolean valueKeyCheck(String key){
+	static boolean valueKeyCheck(String key) {
 		Pattern valuePattern = Pattern.compile("(value)([0-9]+)");
 		Matcher valueMatcher = valuePattern.matcher(key);
 		return valueMatcher.lookingAt();
-	}	
-	
-	static String getValueByKey(String orderNumber){
+	}
+
+	static boolean indexZeroCheck(String check) {
+		Pattern zeroPattern = Pattern.compile("(index)(0{1,})");
+		Matcher zeroMatcher = zeroPattern.matcher(check);
+		return zeroMatcher.lookingAt();
+	}
+
+	static boolean valueZeroCheck(String check) {
+		Pattern zeroPattern = Pattern.compile("(0{1,})([0-9])");
+		Matcher zeroMatcher = zeroPattern.matcher(check);
+		return zeroMatcher.lookingAt();
+	}
+
+	static String getValueByKey(String orderNumber) {
 		Pattern valueIndex = Pattern.compile(orderNumber);
 		ResourceBundle bundle = ResourceBundle.getBundle("in");
 		Enumeration<String> bundleKeys = bundle.getKeys();
-		try{
+		try {
 			String value = bundle.getString(orderNumber).trim();
-			if(isNumber(value)){
+			if (isNumber(value)) {
 				return value;
-			}else{
-			return null;
+			} else {
+				return null;
 			}
-		}catch (MissingResourceException e){
+		} catch (MissingResourceException e) {
 			return null;
 		}
 	}
-	
-	static boolean isNumber(String check){
+
+	static boolean isNumber(String check) {
 		Pattern intPattern = Pattern.compile("[0-9]+");
-		Pattern doublePattern = Pattern.compile("-?[0-9]{1,5}(\\.[0-9]*)");
+		Pattern doublePattern = Pattern.compile("-?[0-9]{1,5}?(\\.[0-9]*)");
 		Matcher isNumberMatcher = intPattern.matcher(check);
-		if(isNumberMatcher.matches()){
+		if (isNumberMatcher.matches()) {
 			return true;
-		}else{ 
+		} else {
 			isNumberMatcher = doublePattern.matcher(check);
-			if(isNumberMatcher.matches()){
+			if (isNumberMatcher.matches()) {
 				return true;
-			}else{
+			} else {
 				return false;
 			}
 		}
 	}
-	
-	static String getOrderNumber(String key, String value){
+
+	static String getOrderNumber(String key, String value) {
 		Pattern digitPattern = Pattern.compile("(index)([0-9]+)");
 		Matcher iValueMatch = digitPattern.matcher(key + value);
-		if(iValueMatch.matches()){
-			return  "value" + iValueMatch.group(2);
-		}else{
+		if (iValueMatch.matches()) {
+			return "value" + iValueMatch.group(2);
+		} else {
 			return null;
 		}
 	}
-		
+
 }
