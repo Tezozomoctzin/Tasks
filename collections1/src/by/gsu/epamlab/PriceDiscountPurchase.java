@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class PriceDiscountPurchase extends Purchase {
 
 	private int discount = 100;
-	
+
 	public double getDiscount() {
 		return discount;
 	}
@@ -23,23 +23,28 @@ public class PriceDiscountPurchase extends Purchase {
 		this.discount = sc.nextInt();
 	}
 
-	public PriceDiscountPurchase(String name, int price, int number, int discount) {
+	public PriceDiscountPurchase(String name, int price, int number,
+			int discount) {
 		super(name, price, number);
+	}
+	
+	public PriceDiscountPurchase(String[] line){
+		super(line);
+		
 	}
 
 	@Override
 	public double getCost() {
-		return (getPrice() - this.discount) * getNumber(); 
+		return (getPrice() - this.discount) * getNumber();
 	}
 
 	@Override
 	public String toString() {
 		return fieldsToString() + "; " + getCost();
 	}
-	
+
 	protected String fieldsToString() {
-		return  super.fieldsToString() + "; " + discount;
+		return super.fieldsToString() + "; " + discount;
 	}
 
-	
 }
