@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class PurchaseFactory {
 
-	public static enum PurchseType{
+	public static enum PurchseType {
 		GENERAL_PURCHASE {
 			@Override
 			Purchase getPurchase(String[] line) {
@@ -22,6 +22,7 @@ public class PurchaseFactory {
 	}
 
 	public static Purchase getPurchaseFromFactory(String[] line) {
-		return PurchseType.valueOf(line[Constants.PURCHASE_TYPE].toUpperCase()).getPurchase(line);
+		return PurchseType.valueOf(line[Constants.PURCHASE_TYPE].toUpperCase())
+				.getPurchase(line);
 	}
 }

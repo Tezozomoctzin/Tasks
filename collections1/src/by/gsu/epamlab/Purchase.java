@@ -26,7 +26,9 @@ public class Purchase {
 	}
 
 	public Purchase(String[] line) {
-
+		setName(line[Constants.NAME_INDEX]);
+		setPrice(line[Constants.PRICE_INDEX]);
+		setNumber(line[Constants.NUMBER_INDEX]);
 	}
 
 	public String getName() {
@@ -48,26 +50,15 @@ public class Purchase {
 	}
 
 	public void setPrice(String price) {
-		int parsedPrice = 0;
-		try {
-			parsedPrice = Integer.parseInt(price);
-			if (parsedPrice >= 0) {
-				this.price = parsedPrice;
-			} else {
-				System.err.println("Wrong number value");
-			}
-		} catch (NumberFormatException e) {
-			System.err.println("Wrong number format");
-		}
-
+		this.price = Integer.parseInt(price);
 	}
 
 	public int getNumber() {
 		return number;
 	}
 
-	public void setNumber(int number) {
-		this.number = number;
+	public void setNumber(String number) {
+		this.number = Integer.parseInt(number);
 	}
 
 	public double getCost() {

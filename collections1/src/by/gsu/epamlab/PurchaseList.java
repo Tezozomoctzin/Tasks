@@ -17,13 +17,18 @@ public class PurchaseList {
 
 	public PurchaseList(File file) {
 		super();
-		this.purchases = new ArrayList<Purchase>();
 		Scanner input = null;
 		try {
 			input = new Scanner(file);
+			purchases = getPurchases(input);
 		} catch (FileNotFoundException e) {
-
 			e.printStackTrace();
+		} catch (WrongCsvException e) {
+			e.printStackTrace();
+		} finally {
+			if (input != null) {
+				input.close();
+			}
 		}
 
 	}
@@ -32,13 +37,37 @@ public class PurchaseList {
 		String inputLine = sc.nextLine();
 		String[] arguments = inputLine.split(Constants.LINE_DELIMTER);
 		if (arguments.length != Constants.PURCHASE_INDECES
-				&& arguments.length != Constants.DISCOUNT_PURCHASE_INDECES){
+				&& arguments.length != Constants.DISCOUNT_PURCHASE_INDECES) {
 			throw new CsvLineException();
 		}
-		
-		
-			return null;
+		try {
+			int inputPrice = Integer.parseInt(arguments[Constants.PRICE_INDEX]);
+			int inputNumber = Integer
+					.parseInt(arguments[Constants.NUMBER_INDEX]);
+			if (arguments.length == Constants.DISCOUNT_PURCHASE_INDECES) {
+				int inputDiscount = Integer
+						.parseInt(arguments[Constants.DISCOUNT_INDEX]);
+			}
+			return PurchaseFactory.getPurchaseFromFactory(arguments);
+		} catch (NumberFormatException e) {
+			throw new CsvLineException();
+		} catch (IllegalArgumentException e) {
+			throw new CsvLineException();
+		}
 
 	}
 
+	private static List<Purchase> getPurchases(Scanner input)
+			throws WrongCsvException {
+		List<Purchase> purchases = new ArrayList<Purchase>();
+		try {
+			while (input.hasNext()) {
+				Purchase purchase = getPurchase(input);
+				purchases.add(purchase);
+			}
+			return purchases;
+		} catch (CsvLineException e) {
+			throw new WrongCsvException(e);
+		}
+	}
 }

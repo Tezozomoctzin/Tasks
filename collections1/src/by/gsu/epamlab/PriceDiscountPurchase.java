@@ -27,10 +27,10 @@ public class PriceDiscountPurchase extends Purchase {
 			int discount) {
 		super(name, price, number);
 	}
-	
-	public PriceDiscountPurchase(String[] line){
+
+	public PriceDiscountPurchase(String[] line) {
 		super(line);
-		
+
 	}
 
 	@Override
